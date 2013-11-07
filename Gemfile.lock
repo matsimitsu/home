@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    em-serialport (0.0.2)
+      eventmachine (= 0.12.10)
+      serialport
+    eventmachine (0.12.10)
+    serialport (1.2.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  em-serialport
