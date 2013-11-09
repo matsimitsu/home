@@ -20,10 +20,6 @@ end
 
 
 helpers do
-  def format_electricity(number)
-    (number.to_f / 1000).round(2)
-  end
-
   def format_gas(number)
     (number.to_f / 100).round(2)
   end
