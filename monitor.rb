@@ -5,6 +5,9 @@ require 'em-serialport'
 require 'json'
 require 'app'
 
+# Silence sql query logging
+ActiveRecord::Base.logger.level = 1
+
 EM.run do
   str = ''
   serial = EventMachine.open_serial('/dev/ttyACM0', 9600, 8, 1, 0)
