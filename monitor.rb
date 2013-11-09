@@ -14,7 +14,9 @@ EM.run do
   serial.on_data do |data|
     kind = /[a-z]/.match(data).to_s
     if kind.present?
-      Measurement.create(:kind => kind)
+      Measurement.create(
+        :kind => kind.force_encoding(Encoding::UTF_8)
+      )
       puts kind
     end
   end
