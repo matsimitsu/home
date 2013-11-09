@@ -10,14 +10,12 @@ set :database, "sqlite3:///measurements.db"
 require_folder("models")
 
 get "/" do
-  @electricity = Measurement.electricity.last_five_minutes.count
-  @gas = Measurement.gas.last_five_minutes.count
-  @water = Measurement.water.last_five_minutes.count
+  @electricity = (Measurement.electricity.last_five_minutes.count.to_f / 5).round(2)
+  @gas = (Measurement.gas.last_five_minutes.count.to_f / 5).round(2)
+  @water = (Measurement.water.last_five_minutes.count.to_f / 5).round(2)
 
   haml :index
 end
-
-
 
 helpers do
   def format_gas(number)
