@@ -10,6 +10,9 @@ EM.run do
   serial = EventMachine.open_serial('/dev/ttyACM0', 9600, 8, 1, 0)
   serial.on_data do |data|
     kind = /[a-z]/.match(data)
-    Measurement.create(:kind => kind) if kind
+    if kind
+      Measurement.create(:kind => kind)
+      puts kind
+    end
   end
 end
