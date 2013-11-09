@@ -1,7 +1,11 @@
 class Measurement < ActiveRecord::Base
 
   scope :last_five_minutes, -> {
-    where("created_at  > ?", 5.minutes.ago)
+    in_last(5.minutes)
+  }
+
+  scope :in_last, ->(time) {
+    where("created_at  > ?", time.ago)
   }
 
   scope :electricity, -> { where(:kind => 'e') }
