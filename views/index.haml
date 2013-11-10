@@ -1,11 +1,27 @@
 %h1 Moo
 
-%dl
-  %dt Electra
-  %dd #{@electricity} Wh
+%ul.meters
+  %li
+    .current
+      %h2 Electricity
+      .number-with-notation
+        %span.number= @electricity
+        %span.notation Wh
+    .history{'data-graph_source' => '/api/e/day'}
 
-  %dt Gas
-  %dd #{format_gas(@gas)} m3
+  %li
+    .current
+      %h2 Gas
+      .number-with-notation
+        %span.number= @gas
+        %span.notation m3
+    .history{'data-graph_source' => '/api/g/day'}
 
-  %dt Water
-  %dd #{@water} Liter
+  %li
+    .current
+      %h2 Water
+      .number-with-notation
+        %span.number= @water
+        %span.notation L
+
+    .history{'data-graph_source' => '/api/w/day'}

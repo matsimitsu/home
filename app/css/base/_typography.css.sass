@@ -1,0 +1,58 @@
+body
+  font-family: $font-family
+  font-size: 16px
+  line-height: 1.875
+  color: $font-color
+  -webkit-text-size-adjust: 100%
+
+a
+  text-decoration: underline
+  color: $blue
+  transition: color .15s
+
+  &:hover,
+  &:focus
+    color: darken($blue,8%)
+
+h1,
+h2,
+h3
+  font-family: $alt-font
+  color: $font-heading
+
+pre,
+code
+  font-family: $pre-font
+  color: $pre-color
+pre
+  font-size: 12px
+  line-height: 2
+
+  code
+    font-size: inherit
+
+abbr
+  border-bottom: 1px dashed $border
+
+code
+  padding: 3px
+  font-size: 13px
+  background-color: #eee
+  +border-radius(2px)
+  font-size: 14px
+
+pre
+  line-height: 2
+
+code
+  background-color: #eee
+  padding: 3px
+  +border-radius(2px)
+
+::selection
+  color: #000
+  background: #ccc
+
+::-moz-selection
+  color: #000
+  background: #ccc
