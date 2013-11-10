@@ -17,14 +17,6 @@ require_folder("models")
 register Sinatra::AssetPack
 register Sinatra::CompassSupport
 
-TIMEFRAMES = {
-  'hour' => '%Y%m%d%H%M',
-  'day' => '%Y%m%d%H',
-  'week' => '%Y%m%d%H',
-  'month' => '%Y%m%d',
-  'year' => '%Y%m%d'
-}
-
 get "/" do
   @electricity = (Measurement.electricity.last_five_minutes.count.to_f / 5).round(2)
   @gas = (Measurement.gas.last_five_minutes.count.to_f / 5).round(2)
@@ -34,14 +26,18 @@ get "/" do
 end
 
 get "/api/:kind/:timeframe" do
-  timeframe = params[:timeframe] || 'hour'
-  halt 404 unless TIMEFRAMES.keys.include? timeframe
-  Measurement.
-    select("count(*) as count, created_at, strftime('#{TIMEFRAMES[timeframe]}', created_at) as ts").
-    where(:kind => params[:kind]).
-    in_last(1.send(timeframe.to_sym)).
-    group('ts').
-    to_json(:only => [:created_at, :count])
+  resolution = Resolution.new(params[:timeframe])
+  {
+    :from => resolution.rounded_from,
+    :to => resolution.rounded_to,
+    :timeframe => params[:timeframe],
+    :data => Measurement.
+      select("count(*) as count, strftime('#{resolution.time_format}', created_at) as ts").
+      where(:kind => params[:kind]).
+      in_last(resolution.rounded_from).
+      group('ts').
+      map { |i| {'ts' => i['ts'], 'count' => i['count']} }
+  }.to_json
 end
 
 helpers do

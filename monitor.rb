@@ -12,6 +12,7 @@ EM.run do
   str = ''
   serial = EventMachine.open_serial('/dev/ttyACM0', 9600, 8, 1, 0)
   serial.on_data do |data|
+    puts data
     kind = /[a-z]/.match(data).to_s
     if kind.present?
       Measurement.create(

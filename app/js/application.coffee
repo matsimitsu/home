@@ -10,23 +10,37 @@ window.render_sparkline = (target, graph_data) ->
   h = $(target).height()
 
   getDate = (el) ->
-    new Date(el.created_at)
+    new Date(el.ts)
 
-  data = graph_data.sort((a,b) -> getDate(a)-getDate(b))
+  data = graph_data.data.sort((a,b) -> getDate(a)-getDate(b))
+  from = new Date(graph_data.from)
+  to = new Date(graph_data.to)
+  timeframe = graph_data.timeframe
+
+  scale = d3.time.scale().domain([from, to])
+  ticks = switch timeframe
+    when 'hour' then scale.ticks(d3.time.minutes, 1)
+    when 'day' || 'week' then scale.ticks(d3.time.hours, 1)
+    when 'month' || 'year' then scale.ticks(d3.time.hours, 24)
+
+
+  bin_width = Math.floor(w / (ticks.length + 2))
   top = d3.max(data, (d) -> d.count)
-  x = d3.time.scale().domain([getDate(data[0]), getDate(data[data.length - 1])]).range([0, w])
+
+  x = d3.time.scale().domain([from, to]).range([0, (w - bin_width)])
   y = d3.scale.linear().domain([0, top]).range([h, 0])
 
-  # create the area (closed path) that will be the response response time graph
-  garea = d3.svg.area()
-    .interpolate("linear")
-    .x((d) ->
-      x(getDate(d))
-    )
-    .y0(Math.max(h - 1, h))
-    .y1((d) ->
-      y(d.count)
-    )
+  full_data = []
+
+  # Make sure missing points are added to the data
+  for date, i in ticks
+    point = graph_data.data.filter((x) =>
+     getDate(x).getTime() == date.getTime()
+    )[0]
+    if point
+      full_data.push(point)
+    else
+      full_data.push({'ts': date, 'count': 0})
 
   graph = d3.select(target).append("svg:svg")
       .attr("width", w)
@@ -34,8 +48,19 @@ window.render_sparkline = (target, graph_data) ->
     .append("svg:g")
       .attr("transform", "translate(0,0)")
 
-  # Add the line by appending an svg:path element with the data line we created above
-  # do this AFTER the axes above so that the line is above the tick-lines
-  graph.append("svg:path")
-    .attr("d", garea(data))
-    .attr("class", "area")
+  response_bar = graph.selectAll(".sparkbar-bar")
+      .data(full_data)
+      .enter().append("g")
+        .attr({
+          class: "sparkbar-bar",
+          transform: "translate(0,0)"
+        })
+
+  # draw rects for the response time bars
+  response_bar.append("rect")
+    .attr({
+      x: (d, i) ->  (i * (bin_width + .5)),
+      y: (d) ->   y(d.count),
+      width: bin_width,
+      height: (d, i) -> h - y(d.count)
+    })
