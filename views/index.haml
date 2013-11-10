@@ -1,5 +1,12 @@
 %h1 Moo
 
+%select.timeframe-select
+  %option{:value => 'hour'} Hour
+  %option{:value => 'day'} Day
+  %option{:value => 'week'} Week
+  %option{:value => 'month'} Month
+  %option{:value => 'year'} Year
+
 %ul.meters
   %li
     .current
@@ -7,7 +14,7 @@
       .number-with-notation
         %span.number= @electricity
         %span.notation Wh
-    .history{'data-graph_source' => '/api/e/day'}
+    .history{'data-graph_source' => 'e'}
 
   %li
     .current
@@ -15,7 +22,7 @@
       .number-with-notation
         %span.number= @gas
         %span.notation m3
-    .history{'data-graph_source' => '/api/g/day'}
+    .history{'data-graph_source' => 'g'}
 
   %li
     .current
@@ -24,4 +31,4 @@
         %span.number= @water
         %span.notation L
 
-    .history{'data-graph_source' => '/api/w/day'}
+    .history{'data-graph_source' => 'w'}

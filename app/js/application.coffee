@@ -1,7 +1,17 @@
 $(document).ready ->
+
+  select = $('.timeframe-select')
+  select.on 'change', ->
+    window.graph_from_timeframe_select($(@).val())
+
+  graph_from_timeframe_select(select.val())
+
+window.graph_from_timeframe_select = (val) ->
   $('[data-graph_source]').each ->
     target = @
-    $.getJSON($(@).data('graph_source'), (res)=>
+    $(@).html('')
+    url = "/api/#{$(@).data('graph_source')}/#{val}"
+    $.getJSON(url, (res) =>
       window.render_sparkline(target, res)
     )
 
@@ -20,9 +30,10 @@ window.render_sparkline = (target, graph_data) ->
   scale = d3.time.scale().domain([from, to])
   ticks = switch timeframe
     when 'hour' then scale.ticks(d3.time.minutes, 1)
-    when 'day' || 'week' then scale.ticks(d3.time.hours, 1)
-    when 'month' || 'year' then scale.ticks(d3.time.hours, 24)
-
+    when 'day' then scale.ticks(d3.time.hours, 1)
+    when 'week' then scale.ticks(d3.time.hours, 1)
+    when 'month' then scale.ticks(d3.time.hours, 24)
+    when 'year' then scale.ticks(d3.time.hours, 24)
 
   bin_width = Math.floor(w / (ticks.length + 2))
   top = d3.max(data, (d) -> d.count)

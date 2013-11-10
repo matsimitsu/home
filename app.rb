@@ -26,15 +26,15 @@ get "/" do
 end
 
 get "/api/:kind/:timeframe" do
-  resolution = Resolution.new(params[:timeframe])
+  timeframe = Timeframe.new(params[:timeframe])
   {
-    :from => resolution.rounded_from,
-    :to => resolution.rounded_to,
+    :from => timeframe.rounded_from,
+    :to => timeframe.rounded_to,
     :timeframe => params[:timeframe],
     :data => Measurement.
-      select("count(*) as count, strftime('#{resolution.time_format}', created_at) as ts").
+      select("count(*) as count, strftime('#{timeframe.time_format}', created_at) as ts").
       where(:kind => params[:kind]).
-      in_last(resolution.rounded_from).
+      in_last(timeframe.rounded_from).
       group('ts').
       map { |i| {'ts' => i['ts'], 'count' => i['count']} }
   }.to_json
