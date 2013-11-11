@@ -16,8 +16,8 @@ window.graph_from_timeframe_select = (val) ->
     )
 
 window.render_sparkline = (target, graph_data) ->
-  w = $(target).width()
-  h = $(target).height()
+  w = $(target).width() - 50
+  h = $(target).height() - 50
 
   getDate = (el) ->
     new Date(el.ts)
@@ -38,6 +38,13 @@ window.render_sparkline = (target, graph_data) ->
   bin_width = Math.floor(w / (ticks.length + 2))
   top = d3.max(data, (d) -> d.count)
 
+  # Adjust the tick count depending on data size
+  if (data.length > 0 && top > 0 )
+    tick_count = 4
+  else
+    tick_count = 1
+    top = 1
+
   x = d3.time.scale().domain([from, to]).range([0, (w - bin_width)])
   y = d3.scale.linear().domain([0, top]).range([h, 0])
 
@@ -54,17 +61,17 @@ window.render_sparkline = (target, graph_data) ->
       full_data.push({'ts': date, 'count': 0})
 
   graph = d3.select(target).append("svg:svg")
-      .attr("width", w)
-      .attr("height", h)
+      .attr("width", w + 50)
+      .attr("height", h + 50)
     .append("svg:g")
-      .attr("transform", "translate(0,0)")
+      .attr("transform", "translate(50,10)")
 
-  response_bar = graph.selectAll(".sparkbar-bar")
+  response_bar = graph.selectAll(".bar")
       .data(full_data)
       .enter().append("g")
         .attr({
-          class: "sparkbar-bar",
-          transform: "translate(0,0)"
+          class: "bar",
+          transform: "translate(,0)"
         })
 
   # draw rects for the response time bars
@@ -75,3 +82,34 @@ window.render_sparkline = (target, graph_data) ->
       width: bin_width,
       height: (d, i) -> h - y(d.count)
     })
+
+  # create y-axis
+  yAxisLeft = d3.svg.axis()
+    .scale(y)
+    .ticks(tick_count)
+    .tickSubdivide(false)
+    .orient("left")
+
+  # Add the y-axis to the graph
+  graph.append("svg:g")
+    .attr({
+      class: "y axis",
+      transform: "translate(0,0)"
+    })
+    .call(yAxisLeft)
+
+  # create x-axis
+  xAxis = d3.svg.axis().
+    scale(x).
+    ticks(4).
+    tickSize(6, 0, 0).
+    tickSubdivide(true).
+    tickPadding(9)
+
+  # Add the x-axis to the graph
+  graph.append("svg:g")
+    .attr({
+      class: "x axis",
+      transform: "translate(0," + (h) + ")"
+    })
+    .call(xAxis);
