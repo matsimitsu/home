@@ -71,7 +71,7 @@ window.render_sparkline = (target, graph_data) ->
       .enter().append("g")
         .attr({
           class: "bar",
-          transform: "translate(,0)"
+          transform: "translate(0,0)"
         })
 
   # draw rects for the response time bars

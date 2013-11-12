@@ -1,11 +1,11 @@
 class Timeframe
 
   TIMEFRAMES = {
-    'hour' => '%Y-%m-%dT%H:%i:00',
-    'day' => '%Y-%m-%dT%H:00:00',
-    'week' => '%Y-%m-%dT%H:00:00',
-    'month' => '%Y-%m-%dT00:00:00',
-    'year' => '%Y-%m-%dT00:00:00'
+    'hour' => '%Y-%m-%dT%H:%i:00+01:00',
+    'day' => '%Y-%m-%dT%H:00:00+01:00',
+    'week' => '%Y-%m-%dT%H:00:00+01:00',
+    'month' => '%Y-%m-%dT00:00:00+01:00',
+    'year' => '%Y-%m-%dT00:00:00+01:00'
   }
 
   attr_reader :from, :to, :timeframe

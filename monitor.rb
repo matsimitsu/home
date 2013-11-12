@@ -7,6 +7,7 @@ require 'app'
 
 # Silence sql query logging
 ActiveRecord::Base.logger.level = 1
+ActiveRecord::Base.default_timezone = :local
 
 EM.run do
   str = ''
