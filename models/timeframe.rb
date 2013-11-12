@@ -1,7 +1,7 @@
 class Timeframe
 
   TIMEFRAMES = {
-    'hour' => '%Y-%m-%dT%H:%M:00',
+    'hour' => '%Y-%m-%dT%H:%i:00',
     'day' => '%Y-%m-%dT%H:00:00',
     'week' => '%Y-%m-%dT%H:00:00',
     'month' => '%Y-%m-%dT00:00:00',
