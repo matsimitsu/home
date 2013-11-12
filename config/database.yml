@@ -1,0 +1,10 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: home_development
+  username: root
+test:
+  adapter: mysql2
+  encoding: utf8
+  database: home_test
+  username: root

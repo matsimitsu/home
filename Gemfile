@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'em-serialport'
 gem 'sinatra'
-gem 'sqlite3'
+gem 'mysql2'
 gem 'activerecord'
 gem 'sinatra-activerecord'
 gem 'sinatra-assetpack', :require => 'sinatra/assetpack'
@@ -14,6 +14,7 @@ gem 'coffee-script'
 gem 'compass'
 
 group :development do
+  gem 'foreman'
   gem 'shotgun'
   gem 'tux'
 end

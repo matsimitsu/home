@@ -62,27 +62,14 @@ void loop() {
     /* Water */
 
     water_input_val = analogRead(water_input_pin);
-    Serial.println(water_input_val);
-    if (water_input_val < 25 && water_state == LOW) {
-      
-      /* Prevent hundeds of counts when sensor is right on the edge */
-      if (loop_counter > 100) {
-        water_state = HIGH;
-        digitalWrite (water_led, HIGH);
-        Serial.println ("w");
-      }
-      loop_counter = 0;
+    if (water_input_val < 22 && water_state == LOW) {
+      water_state = HIGH;
+      digitalWrite (water_led, HIGH);
+      Serial.println ("w");
     } else if (water_input_val > 25 && water_state == HIGH) {
       water_state = LOW;
       digitalWrite( water_led, LOW );
-      loop_counter = 0;
     }
-    
-    /* Dont' let the counter get too high */
-    if (loop_counter > 1000) { 
-      loop_counter = 101;
-    }
-    loop_counter = loop_counter + 1;
 }
 
 

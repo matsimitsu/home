@@ -10,7 +10,6 @@ def require_folder(path)
 end
 
 set :root, File.dirname(__FILE__)
-set :database, "sqlite3:///measurements.db"
 
 require_folder("models")
 

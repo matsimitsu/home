@@ -101,7 +101,7 @@ window.render_sparkline = (target, graph_data) ->
   # create x-axis
   xAxis = d3.svg.axis().
     scale(x).
-    ticks(4).
+    ticks(8).
     tickSize(6, 0, 0).
     tickSubdivide(true).
     tickPadding(9)
