@@ -1,2 +1,2 @@
 mysql: mysqld
-web: rackup
+web: shotgun

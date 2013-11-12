@@ -31,7 +31,7 @@ get "/api/:kind/:timeframe" do
     :to => timeframe.rounded_to,
     :timeframe => params[:timeframe],
     :data => Measurement.
-      select("count(*) as count, strftime('#{timeframe.time_format}', created_at) as ts").
+      select("count(*) as count, DATE_FORMAT(created_at, '#{timeframe.time_format}') as ts").
       where(:kind => params[:kind]).
       in_last(timeframe.rounded_from).
       group('ts').
