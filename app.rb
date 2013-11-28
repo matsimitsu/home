@@ -4,6 +4,7 @@ require 'sinatra/assetpack'
 require 'sass'
 require 'compass'
 require 'sinatra/support'
+ActiveRecord::Base.default_timezone = :local
 
 def require_folder(path)
   Dir[File.expand_path("../#{path}/**/*.rb", __FILE__)].each { |file| require file }

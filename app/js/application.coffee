@@ -35,14 +35,14 @@ window.render_sparkline = (target, graph_data) ->
     when 'month' then scale.ticks(d3.time.hours, 24)
     when 'year' then scale.ticks(d3.time.hours, 24)
 
-  bin_width = Math.floor(w / (ticks.length + 2))
+  bin_width = Math.floor(w / (ticks.length ))
   top = d3.max(data, (d) -> d.count)
 
   # Adjust the tick count depending on data size
   if (data.length > 0 && top > 0 )
     tick_count = 4
   else
-    tick_count = 1
+    tick_count = 4
     top = 1
 
   x = d3.time.scale().domain([from, to]).range([0, (w - bin_width)])
@@ -66,6 +66,52 @@ window.render_sparkline = (target, graph_data) ->
     .append("svg:g")
       .attr("transform", "translate(50,10)")
 
+  xAxisBase = () ->
+    d3.svg.axis()
+      .scale(x)
+      .ticks(8)
+
+  yAxisBase = () ->
+    d3.svg.axis()
+      .scale(y)
+      .ticks(tick_count)
+      .orient("left")
+
+  # create y-axis
+  yAxisLeft = yAxisBase()
+    .tickSubdivide(false)
+    .orient("left")
+
+  # Add the y-axis to the graph
+  graph.append("svg:g")
+    .attr({
+      class: "y axis",
+      transform: "translate(0,0)"
+    })
+    .call(yAxisLeft)
+
+  graph.append("svg:g")
+    .classed("y grid", true)
+    .call(
+      yAxisBase()
+        .tickSize(-w,0,0)
+        .tickFormat("")
+    )
+
+  # create x-axis
+  xAxis = xAxisBase()
+    .tickSize(6, 0, 0)
+    .tickSubdivide(true)
+    .tickPadding(9)
+
+  # Add the x-axis to the graph
+  graph.append("svg:g")
+    .attr({
+      class: "x axis",
+      transform: "translate(0," + (h) + ")"
+    })
+    .call(xAxis);
+
   response_bar = graph.selectAll(".bar")
       .data(full_data)
       .enter().append("g")
@@ -83,33 +129,3 @@ window.render_sparkline = (target, graph_data) ->
       height: (d, i) -> h - y(d.count)
     })
 
-  # create y-axis
-  yAxisLeft = d3.svg.axis()
-    .scale(y)
-    .ticks(tick_count)
-    .tickSubdivide(false)
-    .orient("left")
-
-  # Add the y-axis to the graph
-  graph.append("svg:g")
-    .attr({
-      class: "y axis",
-      transform: "translate(0,0)"
-    })
-    .call(yAxisLeft)
-
-  # create x-axis
-  xAxis = d3.svg.axis().
-    scale(x).
-    ticks(8).
-    tickSize(6, 0, 0).
-    tickSubdivide(true).
-    tickPadding(9)
-
-  # Add the x-axis to the graph
-  graph.append("svg:g")
-    .attr({
-      class: "x axis",
-      transform: "translate(0," + (h) + ")"
-    })
-    .call(xAxis);

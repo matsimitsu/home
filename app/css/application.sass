@@ -5,9 +5,9 @@ $font-size: 14px
 $font-family: Helvetica, Arial, sans-serif
 $alt-font: "myriad-pro", Helvetica, sans-serif
 
-$font-color: #5d6162
-$font-heading: #3f4c5c
-$font-subheading: #6f8087
+$font-color: #b6b6b6
+$font-heading: #152e34
+$font-subheading: #00ac82
 
 *
   +box-sizing(border-box)
@@ -46,14 +46,14 @@ h3
 
   .current
     float: left
-    width: 300px
+    width: 150px
 
     .number
       font-size: 70px
       color: $font-heading
   .history
-    margin-left: 300px
-    width: 600px
+    margin-left: 180px
+    width: 720px
     height: 150px
 
 .history
@@ -63,11 +63,25 @@ h3
     shape-rendering: crispEdges
 
   .bar
-    fill: orange
-
-  .bar:hover
-    fill: orangered
+    fill: #a3c95f
 
   .tick
     text
       font-size: 12px
+      fill: #c2c2c2
+    line
+      stroke: #f0f0f0
+
+  .domain
+    display: none
+
+  .axis.x .domain
+    display: block
+    stroke: #f0f0f0
+
+  .axis.y line
+    display: none
+
+  .grid.y line
+    stroke-dasharray: 5,5
+    stroke: #f0f0f0

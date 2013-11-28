@@ -15,7 +15,7 @@ const int water_input_pin = A1;
 const int water_led = 13;
 int water_state = LOW;
 int water_input_val = 0;
-int loop_counter = 0;
+int last_water_val = 0;
 
 void setup() {
     /* E */
@@ -62,14 +62,23 @@ void loop() {
     /* Water */
 
     water_input_val = analogRead(water_input_pin);
+//    Serial.println(water_input_val);
     if (water_input_val < 22 && water_state == LOW) {
+          Serial.println(water_input_val);
+    Serial.println(last_water_val);
+
       water_state = HIGH;
       digitalWrite (water_led, HIGH);
       Serial.println ("w");
-    } else if (water_input_val > 25 && water_state == HIGH) {
+    } else if (water_input_val > 28 && water_state == HIGH) {
       water_state = LOW;
       digitalWrite( water_led, LOW );
+            Serial.println ("w");
+          Serial.println(water_input_val);
+    Serial.println(last_water_val);
+
     }
+    last_water_val = water_input_val;
 }
 
 
