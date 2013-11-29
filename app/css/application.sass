@@ -6,7 +6,7 @@ $font-family: Helvetica, Arial, sans-serif
 $alt-font: "myriad-pro", Helvetica, sans-serif
 
 $font-color: #b6b6b6
-$font-heading: #152e34
+$font-heading: #cbe876
 $font-subheading: #00ac82
 
 *
@@ -38,22 +38,55 @@ h3
   padding: 0 20px
   text-align: left
 
+header
+  ul
+    height: 80px
+
+  li
+    display: inline-block
+    font-size: 30px
+    border-right: 1px #eaeef0 solid
+    padding: 0px 30px
+    margin: 10px 0
+    &.no-border
+      border: 0
+    &.first
+      padding-left: 0
+    &.last
+      padding-right: 0
+    &.right
+      float: right
+    .notation
+      font-size: 15px
+
+.mod-subheader
+  border-bottom: 1px #eaeef0 solid
+  padding: 5px 0px
+  margin-bottom: 40px
+
+  h1
+    font-size: 20px
+
 .meters
   li
     display: block
     height: 150px
     margin-bottom: 50px
 
-  .current
+  .meter
+    padding-top: 10px
     float: left
-    width: 150px
+    width: 100px
+    text-align: center
+    display: block
 
-    .number
-      font-size: 70px
-      color: $font-heading
+    i
+      width: 100%
+      display: block
+
   .history
-    margin-left: 180px
-    width: 720px
+    margin-left: 100px
+    width: 860px
     height: 150px
 
 .history

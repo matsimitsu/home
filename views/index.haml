@@ -1,34 +1,31 @@
-%h1 Moo
-
-%select.timeframe-select
-  %option{:value => 'hour'} Hour
-  %option{:value => 'day'} Day
-  %option{:value => 'week'} Week
-  %option{:value => 'month'} Month
-  %option{:value => 'year'} Year
+.mod-subheader
+  %h1
+    Energy usage last
+    %select.timeframe-select
+      %option{:value => 'hour'} Hour
+      %option{:value => 'day'} Day
+      %option{:value => 'week'} Week
+      %option{:value => 'month'} Month
+      %option{:value => 'year'} Year
 
 %ul.meters
-  %li
-    .current
-      %h2 Electricity
-      .number-with-notation
-        %span.number= @electricity
-        %span.notation Wh
-    .history{'data-graph_source' => 'e'}
+  %li{'data-graph_source' => 'e'}
+    .meter
+      %i.fa.fa-bolt.fa-5x
+      %span.number= @electricity
+      %span.notation w/h
+    .history
 
-  %li
-    .current
-      %h2 Gas
-      .number-with-notation
-        %span.number= @gas
-        %span.notation m3
-    .history{'data-graph_source' => 'g'}
+  %li{'data-graph_source' => 'g'}
+    .meter
+      %i.fa.fa-fire.fa-5x
+      %span.number= @gas
+      %span.notation m3
+    .history
 
-  %li
-    .current
-      %h2 Water
-      .number-with-notation
-        %span.number= @water
-        %span.notation L
-
-    .history{'data-graph_source' => 'w'}
+  %li{'data-graph_source' => 'w'}
+    .meter
+      %i.fa.fa-tint.fa-5x
+      %span.number= @water
+      %span.notation l
+    .history

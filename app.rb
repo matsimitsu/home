@@ -18,25 +18,41 @@ register Sinatra::AssetPack
 register Sinatra::CompassSupport
 
 get "/" do
-  @electricity = (Measurement.electricity.last_five_minutes.count.to_f / 5).round(2)
-  @gas = (Measurement.gas.last_five_minutes.count.to_f / 5).round(2)
-  @water = (Measurement.water.last_five_minutes.count.to_f / 5).round(2)
+  @electricity = Measurement.electricity.in_last(1.day.ago).count
+  @gas = Measurement.gas.in_last(1.day.ago).count
+  @water = Measurement.water.in_last(1.day.ago).count / 2
 
   haml :index
 end
 
 get "/api/:kind/:timeframe" do
   timeframe = Timeframe.new(params[:timeframe])
+  data= Measurement.
+    select("count(*) as count, DATE_FORMAT(created_at, '#{timeframe.time_format}') as ts").
+    where(:kind => params[:kind]).
+    in_last(timeframe.rounded_from).
+    group('ts').
+    map do |i|
+      {
+        'ts' => i['ts'],
+        'count' => params[:kind] == 'w' ? (i['count'] / 2) : i['count']
+      }
+    end
+
   {
     :from => timeframe.rounded_from,
     :to => timeframe.rounded_to,
     :timeframe => params[:timeframe],
-    :data => Measurement.
-      select("count(*) as count, DATE_FORMAT(created_at, '#{timeframe.time_format}') as ts").
-      where(:kind => params[:kind]).
-      in_last(timeframe.rounded_from).
-      group('ts').
-      map { |i| {'ts' => i['ts'], 'count' => i['count']} }
+    :data => data,
+    :total => data.sum { |i| i['count'] }
+  }.to_json
+end
+
+get "/api/meters" do
+  {
+    :electricity => (Measurement.electricity.last_five_minutes.count.to_f / 5).round(2),
+    :gas => (Measurement.gas.last_five_minutes.count.to_f / 5).round(2),
+    :water => (Measurement.water.last_five_minutes.count.to_f / 10).round(2)
   }.to_json
 end
 
@@ -50,6 +66,7 @@ assets do
   js :application, [
     '/js/jquery.js',
     '/js/d3.js',
+    '/js/moment.js',
     '/js/*.js'
   ]
 

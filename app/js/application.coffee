@@ -1,5 +1,18 @@
 $(document).ready ->
 
+  updateHeader = () ->
+    $.getJSON "/api/meters", (res) =>
+      $('.mod-header-meters .electricity').html(res.electricity)
+      $('.mod-header-meters .gas').html(res.gas)
+      $('.mod-header-meters .water').html(res.water)
+      $('.mod-header-meters .time').html(moment().format('DD-MM-YYYY hh:mm'))
+
+    setTimeout ( ->
+      updateHeader()
+    ), 30000
+
+  updateHeader()
+
   select = $('.timeframe-select')
   select.on 'change', ->
     window.graph_from_timeframe_select($(@).val())
@@ -9,15 +22,17 @@ $(document).ready ->
 window.graph_from_timeframe_select = (val) ->
   $('[data-graph_source]').each ->
     target = @
-    $(@).html('')
     url = "/api/#{$(@).data('graph_source')}/#{val}"
     $.getJSON(url, (res) =>
-      window.render_sparkline(target, res)
+      window.render_meter(target, res)
     )
 
-window.render_sparkline = (target, graph_data) ->
-  w = $(target).width() - 50
-  h = $(target).height() - 50
+window.render_meter = (meter, graph_data) ->
+  $(meter).find('.number').html(graph_data.total)
+  target = $(meter).find('.history')
+  target.html('')
+  w = target.width() - 50
+  h = target.height() - 50
 
   getDate = (el) ->
     new Date(el.ts)
@@ -60,7 +75,7 @@ window.render_sparkline = (target, graph_data) ->
     else
       full_data.push({'ts': date, 'count': 0})
 
-  graph = d3.select(target).append("svg:svg")
+  graph = d3.select(target[0]).append("svg:svg")
       .attr("width", w + 50)
       .attr("height", h + 50)
     .append("svg:g")
