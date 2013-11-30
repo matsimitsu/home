@@ -32,6 +32,11 @@ get "/" do
   haml :index
 end
 
+get "/devices" do
+  @devices = Device.all
+  haml :devices
+end
+
 get "/api/departures/:station" do
   Ns::DepartureCollection.new(:station => params[:station]).departures.to_json
 end
@@ -44,7 +49,25 @@ get "/api/disruptions/:station" do
   }.to_json
 end
 
-get "/api/:kind/:timeframe" do
+get "/api/meters" do
+  {
+    :electricity => (Measurement.electricity.last_five_minutes.count.to_f / 5).round(2),
+    :gas => (Measurement.gas.last_five_minutes.count.to_f / 5).round(2),
+    :water => (Measurement.water.last_five_minutes.count.to_f / 10).round(2)
+  }.to_json
+end
+
+get "/api/devices" do
+  Device.all.to_json
+end
+
+get "/api/devices/:id/:state" do
+  device = Device.find(params[:id])
+  device.switch(params[:state])
+  device.to_json
+end
+
+get "/api/graphs/:kind/:timeframe" do
   timeframe = Timeframe.new(params[:timeframe])
   data= Measurement.
     select("count(*) as count, DATE_FORMAT(created_at, '#{timeframe.time_format}') as ts").
@@ -65,24 +88,6 @@ get "/api/:kind/:timeframe" do
     :data => data,
     :total => data.sum { |i| i['count'] }
   }.to_json
-end
-
-get "/api/meters" do
-  {
-    :electricity => (Measurement.electricity.last_five_minutes.count.to_f / 5).round(2),
-    :gas => (Measurement.gas.last_five_minutes.count.to_f / 5).round(2),
-    :water => (Measurement.water.last_five_minutes.count.to_f / 10).round(2)
-  }.to_json
-end
-
-get "/api/devices" do
-  Device.all.to_json
-end
-
-get "/api/device/:id/:state" do
-  device = Device.find(params[:id])
-  device.switch(params[:state])
-  device.to_json
 end
 
 helpers do

@@ -19,10 +19,15 @@ $(document).ready ->
 
   graph_from_timeframe_select(select.val())
 
+  $('.devices a').on 'click', (e) ->
+    e.preventDefault
+    $.getJSON $(@).attr('href')
+    false
+
 window.graph_from_timeframe_select = (val) ->
   $('[data-graph_source]').each ->
     target = @
-    url = "/api/#{$(@).data('graph_source')}/#{val}"
+    url = "/api/graphs/#{$(@).data('graph_source')}/#{val}"
     $.getJSON(url, (res) =>
       window.render_meter(target, res)
     )

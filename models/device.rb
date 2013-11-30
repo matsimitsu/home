@@ -1,7 +1,7 @@
 class Device < ActiveRecord::Base
 
   def switch(state='on')
-    system "#{kind} #{code} #{state}"
+    system "sudo #{kind} #{code} #{state}"
   end
 
 end

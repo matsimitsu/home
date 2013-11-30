@@ -24,7 +24,9 @@ body
   line-height: 1.875
   color: $font-color
   -webkit-text-size-adjust: 100%
-
+a
+  color: $font-color
+  text-decoration: none
 h1,
 h2,
 h3
@@ -118,3 +120,38 @@ header
   .grid.y line
     stroke-dasharray: 5,5
     stroke: #f0f0f0
+
+.devices
+  li
+    display: block
+    width: 120px
+    padding: 10px
+    margin: 0px 10px
+    float: left
+    text-align: center
+    background-color: #CBE876
+    color: white
+    p
+      line-height: 1em
+      display: block
+      min-height: 32px
+    i
+      display: block
+      width: 100%
+    a
+      border: 2px solid white
+      padding: 5px
+      margin: 10px 0 0 0
+      float: left
+      width: 50px
+
+      &.on
+        border-top-left-radius: 5px
+        border-bottom-left-radius: 5px
+        border-right: 1px solid white
+        color: white
+      &.off
+        border-top-right-radius: 5px
+        border-bottom-right-radius: 5px
+        border-left: 1px solid white
+        color: white

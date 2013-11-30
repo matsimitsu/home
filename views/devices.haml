@@ -1,0 +1,11 @@
+.mod-subheader
+  %h1
+    Devices
+
+%ul.devices
+  - @devices.each do |device|
+    %li
+      %i.fa.fa-5x{:class => "fa-#{device.icon}"}
+      %p= device.name
+      %a.on{:href => "/api/devices/#{device.id}/on"} On
+      %a.off{:href => "/api/devices/#{device.id}/off"} Off
