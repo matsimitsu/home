@@ -70,6 +70,7 @@ GEM
     rack-test (0.6.2)
       rack (>= 1.0)
     raindrops (0.12.0)
+    rake (10.1.0)
     ripl (0.7.0)
       bond (~> 0.4.2)
     ripl-multi_line (0.3.1)
@@ -124,6 +125,7 @@ DEPENDENCIES
   haml
   mysql2
   ns-api!
+  rake
   sass
   shotgun
   sinatra
