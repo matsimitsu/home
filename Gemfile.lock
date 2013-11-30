@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/matsimitsu/ns.git
+  revision: 1dd7e96b13cfe4a07d314344d3e40eaebcebae32
+  branch: departures
+  specs:
+    ns-api (0.3)
+      httpi
+      nokogiri
+      nori
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -41,12 +51,19 @@ GEM
     fssm (0.2.10)
     haml (4.0.3)
       tilt
+    httpi (2.1.0)
+      rack
+      rubyntlm (~> 0.3.2)
     i18n (0.6.5)
     jsmin (1.0.1)
     kgio (2.8.1)
+    mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.2)
     mysql2 (0.3.14)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+    nori (2.3.0)
     rack (1.5.2)
     rack-protection (1.5.1)
       rack
@@ -61,6 +78,7 @@ GEM
       rack (>= 1.0)
       rack-test (>= 0.5)
       ripl (>= 0.3.5)
+    rubyntlm (0.3.4)
     sass (3.2.12)
     serialport (1.2.3)
     shotgun (0.9)
@@ -105,6 +123,7 @@ DEPENDENCIES
   foreman
   haml
   mysql2
+  ns-api!
   sass
   shotgun
   sinatra

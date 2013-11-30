@@ -4,7 +4,14 @@ require 'sinatra/assetpack'
 require 'sass'
 require 'compass'
 require 'sinatra/support'
+require 'ns'
+
 ActiveRecord::Base.default_timezone = :local
+
+Ns.configure do |config|
+  config.username = ENV['NS_API_USER']
+  config.password = ENV['NS_API_PASS']
+end
 
 def require_folder(path)
   Dir[File.expand_path("../#{path}/**/*.rb", __FILE__)].each { |file| require file }
@@ -23,6 +30,18 @@ get "/" do
   @water = Measurement.water.in_last(1.day.ago).count / 2
 
   haml :index
+end
+
+get "/api/departures/:station" do
+  Ns::DepartureCollection.new(:station => params[:station]).departures.to_json
+end
+
+get "/api/disruptions/:station" do
+  disruptions = Ns::DisruptionCollection.new(station: params[:station])
+  {
+    :planned => disruptions.planned_disruptions,
+    :unplanned => disruptions.unplanned_disruptions
+  }.to_json
 end
 
 get "/api/:kind/:timeframe" do

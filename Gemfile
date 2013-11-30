@@ -12,6 +12,7 @@ gem 'haml'
 gem 'sass'
 gem 'coffee-script'
 gem 'compass'
+gem 'ns-api', :git => 'https://github.com/matsimitsu/ns.git', :branch => 'departures'
 
 group :development do
   gem 'foreman'
