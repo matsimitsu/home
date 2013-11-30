@@ -75,6 +75,16 @@ get "/api/meters" do
   }.to_json
 end
 
+get "/api/devices" do
+  Device.all.to_json
+end
+
+get "/api/device/:id/:state" do
+  device = Device.find(params[:id])
+  device.switch(params[:state])
+  device.to_json
+end
+
 helpers do
   def format_gas(number)
     (number.to_f / 100).round(2)
