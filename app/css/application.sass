@@ -41,14 +41,17 @@ h3
   text-align: left
 
 header
-  ul
-    height: 80px
+  height: 80px
+
+  nav
+    ul
+      float: left
 
   li
     display: inline-block
-    font-size: 30px
+    font-size: 25px
     border-right: 1px #eaeef0 solid
-    padding: 0px 30px
+    padding: 0px 25px
     margin: 10px 0
     &.no-border
       border: 0
@@ -60,6 +63,14 @@ header
       float: right
     .notation
       font-size: 15px
+
+  .mod-header-meters
+    float: right
+    line-height: 45px
+
+    li
+      font-size: 20px
+      padding: 0px 20px
 
 .mod-subheader
   border-bottom: 1px #eaeef0 solid
@@ -124,13 +135,18 @@ header
 .devices
   li
     display: block
-    width: 120px
-    padding: 10px
-    margin: 0px 10px
+    width: 140px
+    padding: 15px 10px 10px 10px
+    margin: 0px 12px
     float: left
     text-align: center
     background-color: #CBE876
     color: white
+
+    &:first-child
+      margin-left: 0
+    &:last-child
+      margin-right: 0
     p
       line-height: 1em
       display: block
@@ -143,7 +159,7 @@ header
       padding: 5px
       margin: 10px 0 0 0
       float: left
-      width: 50px
+      width: 60px
 
       &.on
         border-top-left-radius: 5px

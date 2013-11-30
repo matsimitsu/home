@@ -24,6 +24,22 @@ $(document).ready ->
     $.getJSON $(@).attr('href')
     false
 
+  now = new Date()
+  recoverFromSleep = () ->
+    new_now = new Date()
+    diff = new_now.getTime() - now.getTime()
+
+    if diff > 30000
+      updateHeader()
+      if $('.timeframe-select').length > 0
+        graph_from_timeframe_select(select.val())
+
+    now = new_now
+    setTimeout ( ->
+      recoverFromSleep()
+    ), 1000
+  recoverFromSleep()
+
 window.graph_from_timeframe_select = (val) ->
   $('[data-graph_source]').each ->
     target = @

@@ -11,8 +11,15 @@
 
   %body
     .layout-wrap
-      %header.mod-header-meters
-        %ul
+      %header
+        %nav
+          %ul
+            %li.first
+              %a{:href => '/'} Energy usage
+            %li
+              %a{:href => '/devices'} Devices
+
+        %ul.mod-header-meters
           %li.first
             %i.fa.fa-bolt
             %span.number.electricity 0
@@ -23,12 +30,12 @@
             %span.number.gas 0
             %span.notation m3
 
-          %li.no-border
+          %li
             %i.fa.fa-tint
             %span.number.water 0
             %span.notation L
 
-          %li.right.last.no-border
+          %li.last.no-border
             %span.time
 
       = yield
