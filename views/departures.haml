@@ -1,0 +1,26 @@
+.mod-subheader
+  %h1
+    Departures &amp; Disruptions
+
+%ul.mod-departures
+  - @departures.each do |departure|
+    %li
+      %h2
+        %span.time-and-platform{:class => departure.delay_text.present? ? 'delayed' : 'on-time'}
+          = departure.departure_time.strftime("%H:%M")
+          = departure.delay_text
+          %span.platform= departure.platform
+        %span.destination= departure.destination
+        %small.route= departure.route
+      %p
+        = [departure.travel_tip, departure.comments].flatten.compact.join(', ')
+
+%ul.mod-disruptions
+  - @disruptions.each do |disruption|
+    %li
+      %h2
+        = disruption.period
+        = disruption.route
+
+      %p= disruption.message
+      %p= disruption.advice
