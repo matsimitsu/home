@@ -37,6 +37,13 @@ get "/devices" do
   haml :devices
 end
 
+get "/departures" do
+  @departures = Ns::DepartureCollection.new(:station => 'klp').departures
+  disruptions = Ns::DisruptionCollection.new(station: 'klp', :actual => true, :include_planned => true)
+  @disruptions = disruptions.planned_disruptions
+  haml :departures
+end
+
 get "/api/departures/:station" do
   Ns::DepartureCollection.new(:station => params[:station]).departures.to_json
 end
