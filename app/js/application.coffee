@@ -24,6 +24,11 @@ $(document).ready ->
     $.getJSON $(@).attr('href')
     false
 
+  $('nav a').on 'click', (e) ->
+    e.preventDefault()
+    window.location = $(@).attr("href")
+    false
+
   now = new Date()
   recoverFromSleep = () ->
     new_now = new Date()
