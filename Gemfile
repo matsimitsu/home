@@ -14,6 +14,7 @@ gem 'coffee-script'
 gem 'compass'
 gem 'ns-api', :git => 'https://github.com/matsimitsu/ns.git', :branch => 'departures'
 gem 'rake'
+gem 'rest-client'
 
 group :development do
   gem 'foreman'

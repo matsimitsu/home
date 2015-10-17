@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131109160105) do
+ActiveRecord::Schema.define(version: 20151017134055) do
+
+  create_table "devices", force: true do |t|
+    t.string "kind"
+    t.string "name"
+    t.string "icon"
+    t.string "code"
+    t.string "type"
+  end
 
   create_table "measurements", force: true do |t|
     t.string   "kind"
