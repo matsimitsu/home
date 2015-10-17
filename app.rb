@@ -5,6 +5,7 @@ require 'sass'
 require 'compass'
 require 'sinatra/support'
 require 'ns'
+require 'rest-client'
 
 ActiveRecord::Base.default_timezone = :local
 

@@ -27,6 +27,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     arel (4.0.1)
+    arp_scan (0.1.0)
     atomic (1.1.14)
     bond (0.4.3)
     builder (3.1.4)
@@ -131,6 +132,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  arp_scan
   coffee-script
   compass
   em-serialport

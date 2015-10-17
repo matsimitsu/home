@@ -4,4 +4,8 @@ class Device < ActiveRecord::Base
     system "sudo #{kind} #{code} #{state}"
   end
 
+  def kind
+    self.class.name.split('::').last.downcase
+  end
+
 end

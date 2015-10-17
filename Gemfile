@@ -15,6 +15,7 @@ gem 'compass'
 gem 'ns-api', :git => 'https://github.com/matsimitsu/ns.git', :branch => 'departures'
 gem 'rake'
 gem 'rest-client'
+gem 'arp_scan'
 
 group :development do
   gem 'foreman'
