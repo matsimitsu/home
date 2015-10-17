@@ -7,7 +7,7 @@ require 'sinatra/support'
 require 'ns'
 require 'rest-client'
 
-ActiveRecord::Base.default_timezone = :local
+ActiveRecord::Base.default_timezone = :utc
 
 Ns.configure do |config|
   config.username = ENV['NS_API_USER']
@@ -91,8 +91,8 @@ get "/api/graphs/:kind/:timeframe" do
     end
 
   {
-    :from => timeframe.rounded_from,
-    :to => timeframe.rounded_to,
+    :from => timeframe.rounded_from.utc,
+    :to => timeframe.rounded_to.utc,
     :timeframe => params[:timeframe],
     :data => data,
     :total => data.sum { |i| i['count'] }

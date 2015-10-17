@@ -14,18 +14,18 @@
       %i.fa.fa-bolt.fa-5x
       %span.number= @electricity
       %span.notation w/h
-    .history
+    .history{'color-from' =>'#7bdb00', 'color-to' => '#00aa22'}
 
   %li{'data-graph_source' => 'g'}
     .meter
       %i.fa.fa-fire.fa-5x
       %span.number= @gas
       %span.notation m3
-    .history
+    .history{'color-from' =>'#ff7106', 'color-to' => '#c71c13'}
 
   %li{'data-graph_source' => 'w'}
     .meter
       %i.fa.fa-tint.fa-5x
       %span.number= @water
       %span.notation l
-    .history
+    .history{'color-from' =>'#2f97f8', 'color-to' => '#002cc0'}

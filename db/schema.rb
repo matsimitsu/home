@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151017141549) do
+ActiveRecord::Schema.define(version: 20151017145545) do
 
   create_table "devices", force: true do |t|
     t.string "kind"
@@ -30,6 +30,10 @@ ActiveRecord::Schema.define(version: 20151017141549) do
     t.string   "mac"
     t.datetime "last_seen_at"
     t.string   "name"
+  end
+
+  create_table "timers", force: true do |t|
+    t.datetime "event_run_at"
   end
 
 end

@@ -1,18 +1,18 @@
 class Timeframe
 
   TIMEFRAMES = {
-    'hour' => '%Y-%m-%dT%H:%i:00+01:00',
-    'day' => '%Y-%m-%dT%H:00:00+01:00',
-    'week' => '%Y-%m-%dT%H:00:00+01:00',
-    'month' => '%Y-%m-%dT00:00:00+01:00',
-    'year' => '%Y-%m-%dT00:00:00+01:00'
+    'hour' => '%Y-%m-%dT%H:%i:00Z',
+    'day' => '%Y-%m-%dT%H:00:00Z',
+    'week' => '%Y-%m-%dT%H:00:00Z',
+    'month' => '%Y-%m-%dT00:00:00Z',
+    'year' => '%Y-%m-%dT00:00:00Z'
   }
 
   attr_reader :from, :to, :timeframe
 
   def initialize(timeframe)
-    @from = 1.send(timeframe).ago
-    @to = Time.now
+    @from      = 1.send(timeframe).ago
+    @to        = Time.now
     @timeframe = timeframe
   end
 
