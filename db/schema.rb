@@ -13,7 +13,6 @@
 ActiveRecord::Schema.define(version: 20151017134055) do
 
   create_table "devices", force: true do |t|
-    t.string "kind"
     t.string "name"
     t.string "icon"
     t.string "code"

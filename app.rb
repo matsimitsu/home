@@ -14,12 +14,13 @@ Ns.configure do |config|
 end
 
 def require_folder(path)
-  Dir[File.expand_path("../#{path}/**/*.rb", __FILE__)].each { |file| require file }
+  Dir[File.expand_path("../#{path}/*.rb", __FILE__)].each { |file| load file }
 end
 
 set :root, File.dirname(__FILE__)
 
 require_folder("models")
+require_folder("models/devices")
 
 register Sinatra::AssetPack
 register Sinatra::CompassSupport

@@ -1,7 +1,7 @@
 class CreateDevices < ActiveRecord::Migration
   def up
     create_table :devices do |t|
-      t.string :kind
+      t.string :type
       t.string :name
       t.string :icon
       t.string :code
