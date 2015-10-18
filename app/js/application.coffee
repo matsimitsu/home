@@ -10,7 +10,7 @@ $(document).ready ->
 
   updateHeader()
 
-  $('.devices a').on 'click', (e) ->
+  $('.device a').on 'click', (e) ->
     e.preventDefault
     $.getJSON $(@).attr('href')
     false
