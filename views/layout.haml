@@ -6,41 +6,11 @@
     %meta{:name => 'apple-mobile-web-app-capable', :content => 'yes'}
     %meta{:name => 'apple-mobile-web-app-status-bar-style', :content => 'black'}
     %meta{:name => 'viewport', :content => 'user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0'}
-    %link{:href => "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", :rel=>"stylesheet"}
+    %link{:href => "//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css", :rel=>"stylesheet"}
     %title Test
 
   %body
-    .layout-wrap
-      %header
-        %nav
-          %ul
-            %li.first
-              %a{:href => '/'} Energy
-            %li
-              %a{:href => '/devices'} Devices
-            %li
-              %a{:href => '/departures'} Departures
-
-        %ul.mod-header-meters
-          %li.first
-            %i.fa.fa-bolt
-            %span.number.electricity 0
-            %span.notation w/h
-
-          %li
-            %i.fa.fa-fire
-            %span.number.gas 0
-            %span.notation m3
-
-          %li
-            %i.fa.fa-tint
-            %span.number.water 0
-            %span.notation L
-
-          %li.last.no-border
-            %span.time
-
-      = yield
+    = yield
 
     = css :application
     = js :application

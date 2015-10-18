@@ -1,20 +1,20 @@
-@import "compass"
-@import "compass/reset"
+@import 'base/reset'
 
 $font-size: 14px
 $font-family: Helvetica, Arial, sans-serif
 $alt-font: "myriad-pro", Helvetica, sans-serif
 
 $font-color: #b6b6b6
-$font-heading: #cbe876
+$font-heading: #bac1c9
 $font-subheading: #00ac82
-
+$strong-color: #5f6e7a
 *
-  +box-sizing(border-box)
+  box-sizing: border-box
 
 html
   overflow-y: scroll
   text-align: center
+  height: 100%
 
 body
   min-width: 320px
@@ -24,184 +24,133 @@ body
   line-height: 1.875
   color: $font-color
   -webkit-text-size-adjust: 100%
+  height: 100%
+  font-weight: lighter
+
 a
   color: $font-color
   text-decoration: none
 h1,
 h2,
 h3
-  font-family: $alt-font
   color: $font-heading
-
-.layout-wrap
-  max-width: 1000px
-  position: relative
-  margin: 0 auto
-  padding: 0 20px
   text-align: left
 
-header
-  height: 80px
+.fa
+  color: #d9dde1
 
-  nav
-    ul
-      float: left
+.boxes
+  background-color: #f8f9fb
+  display: block
+  height: 100%
+  width: 100%
 
-  li
-    display: inline-block
-    font-size: 25px
-    border-right: 1px #eaeef0 solid
-    padding: 0px 25px
-    margin: 10px 0
-    &.no-border
-      border: 0
-    &.first
-      padding-left: 0
-    &.last
-      padding-right: 0
-    &.right
-      float: right
-    .notation
-      font-size: 15px
-
-  .mod-header-meters
-    float: right
-    line-height: 45px
-
-    li
-      font-size: 20px
-      padding: 0px 20px
-
-.mod-subheader
-  border-bottom: 1px #eaeef0 solid
-  padding: 5px 0px
-  margin-bottom: 40px
-
-  h1
-    font-size: 20px
-
-.meters
-  li
+  & > li
     display: block
-    height: 150px
-    margin-bottom: 50px
-
-  .meter
-    padding-top: 10px
     float: left
-    width: 100px
-    text-align: center
-    display: block
+    list-style: none
+    margin: 0
+    padding: 10px
+    height: 25%
+    min-height: 25%
+    width: 20%
+    overflow: hidden
 
-    i
+    &.double
+      width: 40%
+
+    &.triple
+      width: 60%
+
+    &.half
+      width: 10%
+
+  .inner
+    background-color: white
+    height: 100%
+    width: 100%
+    padding: 10px
+    border: 1px solid #f2f3f6
+
+    h2
       width: 100%
-      display: block
+      text-align: left
+      height: 25%
+      text-transform: capitalize
+
+      .fa
+        margin-right: 5px
+
+.usage
+  .meter
+    height: 40%
+
+    .number
+      font-weight: normal
+      color: $strong-color
+      font-size: 22px
 
   .history
-    margin-left: 100px
-    width: 860px
-    height: 150px
+    width: 100%
+    height: 35%
 
 .history
-  .axis path, .axis line
-    fill: none
-    stroke: #000
-    shape-rendering: crispEdges
-
-  .bar
-    fill: #a3c95f
-
   .line
     fill: none
-    stroke-width: 1px
-  .tick
-    text
-      font-size: 12px
-      fill: #c2c2c2
-    line
-      stroke: #f0f0f0
+    stroke-width: 1.5px
+    shape-rendering: optimizeQuality
 
-  .domain
-    display: none
+.device
 
-  .axis.x .domain
-    display: block
-    stroke: #f0f0f0
-
-  .axis.y line
-    display: none
-
-  .grid.y line
-    stroke-dasharray: 5,5
-    stroke: #f0f0f0
-
-.devices
-  li
-    display: block
-    width: 140px
-    padding: 15px 10px 10px 10px
-    margin: 0px 12px
-    float: left
+  h3
     text-align: center
-    background-color: #CBE876
-    color: white
+    height: 40%
+    font-weight: normal
+    color: $strong-color
 
-    &:first-child
-      margin-left: 0
-    &:last-child
-      margin-right: 0
-    p
-      line-height: 1em
-      display: block
-      min-height: 32px
-    i
-      display: block
-      width: 100%
+  .switches
+    text-align: center
+    height: 35%
+
+  .toggle
+    margin: auto
+    width: 80%
+
     a
-      border: 2px solid white
+      border: 2px solid #f2f3f6
       padding: 5px
-      margin: 10px 0 0 0
       float: left
-      width: 60px
+      width: 50%
 
       &.on
         border-top-left-radius: 5px
         border-bottom-left-radius: 5px
         border-right: 1px solid white
-        color: white
       &.off
         border-top-right-radius: 5px
         border-bottom-right-radius: 5px
         border-left: 1px solid white
-        color: white
 
-.mod-departures
-  float: left
-  width: 480px
+.departures
+  text-align: left
+  font-size: 14px
+  ul
+    overflow: auto
 
-  li
-    margin-bottom: 20px
-
-  h2
-    line-height: 1.5em
   .time-and-platform
-    background-color: #CBE876
-    color: white
-    margin-right: 5px
+    font-weight: normal
+    color: $strong-color
+
+  .delayed
+    color: red
+
+  .platform
     display: inline-block
-    padding: 2px 5px 0px 5px
-
-    &.delayed
-      background-color: #a3c95f
-
-    .platform
-      border-left: 1px solid white
-      display: inline-block
-      padding-left: 5px
 
   small
     font-size: .8em
     color: $font-color
+
 .mod-disruptions
   float: right
   width: 480px

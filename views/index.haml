@@ -1,31 +1,65 @@
-.mod-subheader
-  %h1
-    Energy usage last
-    %select.timeframe-select
-      %option{:value => 'hour'} Hour
-      %option{:value => 'day'} Day
-      %option{:value => 'week'} Week
-      %option{:value => 'month'} Month
-      %option{:value => 'year'} Year
-
-%ul.meters
+%ul.boxes
   %li{'data-graph_source' => 'e'}
-    .meter
-      %i.fa.fa-bolt.fa-5x
-      %span.number= @electricity
-      %span.notation w/h
-    .history{'color-from' =>'#7bdb00', 'color-to' => '#00aa22'}
+    .inner.usage
+      %h2
+        %i.fa.fa-bolt
+        Electricity
+      .meter
+        %span.number= @electricity
+        %span.notation w/h
+
+      .history{'color-from' =>'#7bdb00', 'color-to' => '#00aa22'}
 
   %li{'data-graph_source' => 'g'}
-    .meter
-      %i.fa.fa-fire.fa-5x
-      %span.number= @gas
-      %span.notation m3
-    .history{'color-from' =>'#ff7106', 'color-to' => '#c71c13'}
+    .inner.usage
+      %h2
+        %i.fa.fa-fire
+        Gas
+      .meter
+        %span.number= @gas
+        %span.notation m3
+
+      .history{'color-from' =>'#ff7106', 'color-to' => '#c71c13'}
 
   %li{'data-graph_source' => 'w'}
-    .meter
-      %i.fa.fa-tint.fa-5x
-      %span.number= @water
-      %span.notation l
-    .history{'color-from' =>'#2f97f8', 'color-to' => '#002cc0'}
+    .inner.usage
+      %h2
+        %i.fa.fa-tint
+        Water
+      .meter
+        %span.number= @gas
+        %span.notation L
+
+      .history{'color-from' =>'#2f97f8', 'color-to' => '#002cc0'}
+
+  %li.double
+    .inner.departures
+      %h2
+        %i.fa.fa-train
+        Departures
+      %ul
+        - @departures.each do |departure|
+          %li
+            %span.time-and-platform{:class => departure.delay_text.present? ? 'delayed' : 'on-time'}
+              = departure.departure_time.strftime("%H:%M")
+              %span.platform= departure.platform
+            %span.destination= departure.destination
+            %small
+              = departure.route
+            - if departure.delay_text.present?
+              %small.delayed (#{departure.delay_text})
+
+
+
+  - @devices.each do |device|
+    %li
+      .inner.device
+        %h2
+          %i.fa{:class => "fa-#{device.icon}"}
+          = device.kind
+        %h3
+          = device.name
+        .switches
+          .toggle
+            %a.on{:href => "/api/devices/#{device.id}/on"} On
+            %a.off{:href => "/api/devices/#{device.id}/off"} Off

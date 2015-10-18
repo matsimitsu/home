@@ -2,8 +2,6 @@ require "sinatra"
 require "sinatra/activerecord"
 require 'sinatra/assetpack'
 require 'sass'
-require 'compass'
-require 'sinatra/support'
 require 'ns'
 require 'rest-client'
 
@@ -20,17 +18,22 @@ end
 
 set :root, File.dirname(__FILE__)
 
+set :sass, { :load_paths => [
+    "#{settings.root}/app/css",
+    "#{settings.root}/app/css/*"
+  ]}
+
 require_folder("models")
 require_folder("models/devices")
 
 register Sinatra::AssetPack
-register Sinatra::CompassSupport
 
 get "/" do
   @electricity = Measurement.electricity.in_last(1.day.ago).count
   @gas = Measurement.gas.in_last(1.day.ago).count
   @water = Measurement.water.in_last(1.day.ago).count / 2
-
+  @devices = Device.all
+  @departures = Ns::DepartureCollection.new(:station => 'klp').departures.first(4)
   haml :index
 end
 
@@ -86,7 +89,7 @@ get "/api/graphs/:kind/:timeframe" do
     map do |i|
       {
         'ts' => i['ts'],
-        'count' => params[:kind] == 'w' ? (i['count'] / 2) : i['count']
+        'count' => params[:kind] == 'w' ? (i['count'] / 2.to_f) : i['count']
       }
     end
 
@@ -114,6 +117,7 @@ assets do
   ]
 
   css :application, [
-    '/css/*.css'
+    '/css/*.css',
+    '/css/base/*'
    ]
 end
