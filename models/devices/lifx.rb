@@ -4,7 +4,7 @@ module Devices
     def switch(state='on')
       RestClient::Request.execute(
         :method  => :put,
-        :url     => "https://api.lifx.com/v1/lights/id:#{code}/state",
+        :url     => "https://api.lifx.com/v1/lights/#{code}/state",
         :payload => {
           "power"    => state,
           "duration" => 5
