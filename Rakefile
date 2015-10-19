@@ -6,7 +6,7 @@ task :update_phones do
 end
 
 task :update_sunset do
-  response =  RestClient.get("http://api.sunrise-sunset.org/json?lat=52.0263009&lng=-5.5544309&date=today&formatted=0")
+  response =  RestClient.get("http://api.sunrise-sunset.org/json?lat=52.0263009&lng=5.5544309&date=today&formatted=0")
   json = JSON.parse(response.body)
 
   sunset = Time.parse(json['results']['sunset'])

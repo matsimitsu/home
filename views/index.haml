@@ -1,5 +1,5 @@
 %ul.boxes
-  %li{'data-graph_source' => 'e'}
+  %li{'data-graph_source' => '/api/graphs/e/day'}
     .inner.usage
       %h2
         %i.fa.fa-bolt
@@ -8,9 +8,9 @@
         %span.number= @electricity
         %span.notation w/h
 
-      .history{'color-from' =>'#7bdb00', 'color-to' => '#00aa22'}
+      .graph{'color-from' =>'#7bdb00', 'color-to' => '#00aa22'}
 
-  %li{'data-graph_source' => 'g'}
+  %li{'data-graph_source' => '/api/graphs/g/day'}
     .inner.usage
       %h2
         %i.fa.fa-fire
@@ -19,9 +19,9 @@
         %span.number= @gas
         %span.notation m3
 
-      .history{'color-from' =>'#ff7106', 'color-to' => '#c71c13'}
+      .graph{'color-from' =>'#ff7106', 'color-to' => '#c71c13'}
 
-  %li{'data-graph_source' => 'w'}
+  %li{'data-graph_source' => '/api/graphs/w/day'}
     .inner.usage
       %h2
         %i.fa.fa-tint
@@ -30,7 +30,7 @@
         %span.number= @gas
         %span.notation L
 
-      .history{'color-from' =>'#2f97f8', 'color-to' => '#002cc0'}
+      .graph{'color-from' =>'#2f97f8', 'color-to' => '#002cc0'}
 
   %li.double
     .inner.departures
@@ -63,3 +63,26 @@
           .toggle
             %a.on{:href => "/api/devices/#{device.id}/on"} On
             %a.off{:href => "/api/devices/#{device.id}/off"} Off
+
+  %li.double{'data-graph_source' => '/api/rainfall'}
+    .inner.weather
+      %h2
+        %i.fa.fa-sun-o
+        Weather
+
+      %ul.forecast
+        %li.current
+          %h3.small Currently
+          %div.number
+            = @forecast['currently']['temperature'].round
+            %span.small &deg;
+        - @forecast['daily']['data'][0..2].each do |day|
+          %li
+            %h3.small= Time.at(day['time']).strftime('%A')
+            %div.number
+              #{day['temperatureMin'].round} - #{day['temperatureMax'].round}
+              %span.small &deg;
+
+      .graph{'color-from' =>'#2c3a8b', 'color-to' => '#f07cb5'}
+
+

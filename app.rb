@@ -23,6 +23,7 @@ set :sass, { :load_paths => [
     "#{settings.root}/app/css/*"
   ]}
 
+require_folder("lib")
 require_folder("models")
 require_folder("models/devices")
 
@@ -34,6 +35,7 @@ get "/" do
   @water = Measurement.water.in_last(1.day.ago).count / 2
   @devices = Device.all
   @departures = Ns::DepartureCollection.new(:station => 'klp').departures.first(4)
+  @forecast = Weather.forecast(ENV['FORECAST_KEY'], ENV['LAT'], ENV['LNG'])
   haml :index
 end
 
@@ -71,6 +73,17 @@ end
 
 get "/api/devices" do
   Device.all.to_json
+end
+
+get "/api/rainfall" do
+  data = Weather.get_rain_forecast(ENV['LAT'], ENV['LNG'])
+  {
+    :from => data.first['ts'].utc,
+    :to => data.last['ts'].utc,
+    :timeframe => 'five_minutely',
+    :data => data,
+    :max => 255
+    }.to_json
 end
 
 get "/api/devices/:id/:state" do
@@ -121,3 +134,4 @@ assets do
     '/css/base/*'
    ]
 end
+#100.times { Measurement.create(:kind => 'w', :created_at => rand(100).minutes.ago.utc) }

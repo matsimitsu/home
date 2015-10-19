@@ -39,14 +39,13 @@ $(document).ready ->
 window.graph_from_timeframe_select = (val) ->
   $('[data-graph_source]').each ->
     target = @
-    url = "/api/graphs/#{$(@).data('graph_source')}/#{val}"
-    $.getJSON(url, (res) =>
+    $.getJSON($(@).data('graph_source'), (res) =>
       window.render_meter(target, res)
     )
 
 window.render_meter = (meter, graph_data) ->
   $(meter).find('.number').html(graph_data.total)
-  target = $(meter).find('.history')
+  target = $(meter).find('.graph')
   target.html('')
   colorTo = target.attr('color-to')
   colorFrom = target.attr('color-from')
@@ -63,13 +62,17 @@ window.render_meter = (meter, graph_data) ->
 
   scale = d3.time.scale.utc().domain([from, to])
   ticks = switch timeframe
+    when 'five_minutely' then scale.ticks(d3.time.minutes, 5)
     when 'hour' then scale.ticks(d3.time.minutes, 1)
     when 'day' then scale.ticks(d3.time.hours, 1)
     when 'week' then scale.ticks(d3.time.hours, 1)
     when 'month' then scale.ticks(d3.time.days, 1)
     when 'year' then scale.ticks(d3.time.days, 1)
 
-  top = d3.max(data, (d) -> d.count)
+  if graph_data.max
+    top = graph_data.max
+  else
+    top = d3.max(data, (d) -> d.count)
 
   # Adjust the tick count depending on data size
   if (data.length > 0 && top > 0 )

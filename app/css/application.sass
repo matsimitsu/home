@@ -85,16 +85,39 @@ h3
   .meter
     height: 40%
 
-    .number
-      font-weight: normal
-      color: $strong-color
-      font-size: 22px
+.usage, .weather
+  .number
+    font-weight: normal
+    color: $strong-color
+    font-size: 22px
 
-  .history
+  .graph
     width: 100%
     height: 35%
 
-.history
+.forecast
+  height: 40%
+  display: block
+
+  li
+    display: block
+    width: 22%
+    float: left
+    text-align: left
+
+    &.current
+      width: 31%
+      padding-left: 25px
+
+  .small
+    font-size: .8em
+    color: $font-color
+
+  .big
+    font-size: 1.4em
+    float: left
+
+.graph
   .line
     fill: none
     stroke-width: 1.5px
