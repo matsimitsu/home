@@ -5,7 +5,6 @@ class Weather
     [].tap do |arr|
       first = Time.parse(response.lines.first.split('|').last)
       response.lines.each_with_index do |line, index|
-        puts line.inspect
         rainfall = line.split('|').first
         time = first.advance(:minutes => (5 * index))
         arr.push({'ts' => time.utc, 'count' => rainfall.to_i})
